@@ -1,18 +1,24 @@
-import "./Content.css";
-import { Navbar } from "./Navbar";
+import "./Content/Content.css"
+import { Navbar } from "./Navbar/Navbar";
 import { useContext } from "react";
 import { CartContext } from "../cartProvider.js/card";
+import { StarHalf } from 'lucide-react';
 
 export const Like = () => {
-  const { LikesItem, RemovefromLike, MovetoCart } = useContext(CartContext);
+  const { LikesItem, RemovefromLike, MovetoCart,CartItem} = useContext(CartContext);
   console.log(LikesItem.length);
+
+  const Items = LikesItem.length;
+
+  const checkCartIds = CartItem.map(data => data.id);
 
   return (
     <div>
       <Navbar />
       <br />
-      <p>
-        {LikesItem.length === 0 ? "No Items in WishList" : ""}
+      <h1 className="head">My WishList ({Items})</h1>
+      <p className="card-container">
+        {LikesItem.length === 0 ? <h1 className="head-info">No, Items in WishList</h1> : ""}
         {LikesItem.map(
           ({
             id,
@@ -22,24 +28,40 @@ export const Like = () => {
             manufacturer,
             year,
             discount,
-            price
-          }) => (
-            <div className="card">
+            price,
+            discountedPrice
+          }) => {
+            const isInCart = checkCartIds.includes(id);
+          return (
+            <div className="card-likeCart">
               <img src={Image} className="Watch" alt="watch" />
-
-              <p>
-                {watch_model}
-                <span>{rating}</span>
+              <div className="likeCart-content">
+              <p className="watch-model">
+                  <span className="watch-company">{manufacturer}</span><br/>x
+                  <span className="watch-company-model">{watch_model}</span>
               </p>
-              <p>{manufacturer}</p>
-              <p>{year}</p>
-              <p>
-                {price} (<span>{discount} OFF</span>)
-              </p>
+              <p className="watch-rating">{rating} {}<StarHalf size={15} /> </p>
+              <p className="price-discount">
+                  $/{discountedPrice} <del>${price}</del> (<span className="discount">{discount} OFF</span>)
+                  </p>
+              </div>
+              <div className="btn-container">
               <button className="button" onClick={() => RemovefromLike({ id })}>
                 Remove
               </button>
-              <button
+              </div>
+              <div>
+              {isInCart ? 
+              <div className="btn-container">
+                <button
+                className="button"
+                >
+                This Product exits in Cart
+                </button>
+                </div> 
+              : 
+              <div className="btn-container">
+                <button
                 className="button"
                 onClick={() =>
                   MovetoCart({
@@ -56,10 +78,17 @@ export const Like = () => {
               >
                 Move to Cart
               </button>
+              </div>
+              }
+              </div>
             </div>
           )
+}
         )}
+
       </p>
+      <div>
+  </div>
     </div>
   );
 };

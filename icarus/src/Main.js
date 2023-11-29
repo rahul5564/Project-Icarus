@@ -1,14 +1,15 @@
 import React from "react";
 import { Aisde } from "./Pages/sidebar/sidebar";
-import { Content } from "./Pages/Components/Content";
-import { Navbar } from "./Pages/Components/Navbar";
+// import { Content } from "./Pages/Components/Content";
+import {Content} from "./Pages/Components/Content/Content"
+import { Navbar } from "./Pages/Components/Navbar/Navbar";
 import { Data } from "./Data/db";
+import { Bottom } from "./Pages/BottomNav/BottomNav";
 
 export const Main = () => {
   return (
     <div>
       <div>
-        {/* <h1>Icarus</h1> */}
         {/* <p>
           Timeless Elegance, Precision Craftsmanship: Welcome to Icars Watch-Co
         </p>
